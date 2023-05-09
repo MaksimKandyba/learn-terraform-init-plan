@@ -2,12 +2,11 @@ provider "docker" {}
 provider "random" {}
 
 resource "docker_image" "nginx" {
-  name         = "nginx:latest"
-  keep_locally = false
+  name = "nginx:latest"
 }
 
 resource "docker_container" "nginx" {
-  image = docker_image.nginx
+  image = docker_image.nginx.image_id
   name  = "hello-terraform"
   ports {
     internal = 80
@@ -26,9 +25,11 @@ module "nginx-pet" {
 }
 
 module "hello" {
-  source       = "joatmon08/hello/random"
-  version      = "3.1.0"
-  hello        = random_pet.dog.id
-  second_hello = random_pet.dog.id
-  secret_key   = "secret"
+  source  = "joatmon08/hello/random"
+  version = "6.0.0"
+  hellos = {
+    hello        = random_pet.dog.id
+    second_hello = "World"
+  }
+  some_key = "NOTSECRET"
 }
