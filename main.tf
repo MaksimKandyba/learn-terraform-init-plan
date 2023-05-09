@@ -31,5 +31,5 @@ module "hello" {
     hello        = random_pet.dog.id
     second_hello = "World"
   }
-  some_key = "NOTSECRET"
+  some_key = var.secret_key
 }
